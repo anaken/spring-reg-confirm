@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+<body>
+<div class="container">
+
+    <form class="form-signin" method="post" action="/">
+        <h2 class="form-signin-heading">Registration</h2>
+        <!--p>
+            <label for="login" class="sr-only">Username</label>
+            <input type="text" id="login" name="login" class="form-control" placeholder="Login" required autofocus>
+        </p>
+        <p>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        </p>
+        <p>
+            <label for="email" class="sr-only">Full name</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+        </p>
+        <p>
+            <label for="fullname" class="sr-only">Full name</label>
+            <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Full name" required>
+        </p-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script th:inline="javascript">
+        $('form').submit(function (event) {
+            event.preventDefault();
+            var $form = $(this);
+            $.ajax({
+                url: "/registration",
+                type : 'POST',
+                contentType : 'application/json',
+                dataType: "json",
+                data: JSON.stringify({login: "test", password: "pass", email: "email", fullName: "fullName"}),
+                /*
+                data: JSON.stringify({
+                    login: $form.find("input[name='login']").val(),
+                    password: $form.find("input[name='password']").val(),
+                    email: $form.find("input[name='email']").val(),
+                    fullName: $form.find("input[name='fullname']").val(),
+                }),
+                */
+                success: function(data){
+                    alert("Registration successfull");
+                },
+                error: function(data) {
+                    alert(data.responseJSON.message);
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
