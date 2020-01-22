@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

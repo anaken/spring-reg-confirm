@@ -1,29 +1,29 @@
 package ru.test.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.test.persistence.entity.User;
-import ru.test.persistence.repository.UserRepository;
+import ru.test.service.dto.ConfirmRegistrationDto;
 import ru.test.web.dto.UserDto;
 
-@Service
-public class UserService {
+/**
+ * Сервис по работе с пользователями
+ */
+public interface UserService {
+    /**
+     * Создать нового пользователя
+     * @param userDto информация о пользователе
+     * @return пользователь
+     */
+    User createUser(UserDto userDto);
 
-    @Autowired
-    private UserRepository userRepository;
+    /**
+     * Отправить информацию для подтверждения регистрации пользователя
+     * @param userId ID пользователя
+     */
+    void sendToConfirmRegistration(String userId);
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Transactional
-    public User createUser(UserDto userDto) {
-        User user = new User();
-        user.setLogin(userDto.getLogin());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setEmail(userDto.getEmail());
-        user.setFullName(userDto.getFullName());
-        return userRepository.save(user);
-    }
+    /**
+     * Подтвердить регистрацию
+     * @param confirm информация о подтверждении
+     */
+    void confirmRegistration(ConfirmRegistrationDto confirm);
 }

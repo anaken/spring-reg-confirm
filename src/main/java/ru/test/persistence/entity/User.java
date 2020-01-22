@@ -1,15 +1,16 @@
 package ru.test.persistence.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import ru.test.persistence.enums.UserStatus;
+
+import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @Column(length = 36)
+    private String id;
 
     private String login;
 
@@ -19,14 +20,24 @@ public class User {
 
     private String fullName;
 
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
     public User() {
     }
 
-    public Long getId() {
+    @PrePersist
+    public void prePersist() {
+        if (id == null) {
+            id = UUID.randomUUID().toString();
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -60,5 +71,13 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 }
